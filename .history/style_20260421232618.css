@@ -1,0 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  color: #222;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+section {
+  background: white;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.affiliations {
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* align vertically */
+  gap: 40px;                 /* space between logos */
+  margin-top: 20px;
+}
+
+.affiliations img {
+  height: 60px;              /* consistent size */
+  width: auto;
+}
