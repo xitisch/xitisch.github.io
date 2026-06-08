@@ -1,0 +1,483 @@
+
+/
+Claude finished the response
+xitisch/xitisch.github.io
+main
+
+GITHUB
+
+Add a section in affiliation that I am a Visiting Student at Tsinghua University, is it wise to do so?
+
+1:52 AM
+
+Weighed affiliation benefits against contextual considerations
+Weighed affiliation benefits against contextual considerations
+Yes, it's generally a good idea. Tsinghua is one of the most prestigious universities in the world, and a visiting student position there signals international academic mobility, exposure to a different research environment, and that you were selected competitively. For a profile aimed at ETH Zurich and a Physical AI / robotics direction, it adds rather than detracts — many top robotics labs (including at ETH) have active collaborations with Tsinghua.
+
+A few honest caveats worth thinking about:
+
+Be accurate about scope. "Visiting Student" can mean anything from a two-week summer school to a full semester of research. If it's short, consider being specific (e.g. "Visiting Student, Summer 2025" or naming the program/lab). Vague affiliations sometimes invite the assumption you're inflating things.
+Order matters. Put it where it fits chronologically/logically — probably between KTH and ETH, or after ETH as a separate "Exchange / Visiting" entry, so it doesn't look like it competes with your degree-granting institutions.
+Geopolitics. Some grant or security-sensitive employers (defense, certain US labs) ask about Chinese university affiliations. For academic and most industry purposes this is a non-issue, but worth being aware of long-term.
+Here's the snippet to add inside your Affiliations section:
+
+html
+<div class="affiliation">
+  <img src="images/tsinghua.png" alt="Tsinghua University logo">
+  <div class="affiliation-text">
+    <strong>Tsinghua University</strong><br>
+    Visiting Student
+  </div>
+</div>
+You'll need to drop a tsinghua.png (or .jpg) into your images/ folder. The existing .affiliation img rule will size it to match the KTH and ETH logos automatically, so no CSS changes needed.
+
+If you want, tell me roughly when/what the visiting position was and I can suggest tighter wording for the line under the name.
+
+Visiting Student at Tao Du's Gropu, Tsinghua Global Research Program
+https://www.tsinghua.edu.cn/gjhz/dqyjyxx.htm
+
+1:55 AM
+
+Verified researcher credentials and crafted formatted recommendation
+Verified researcher credentials and crafted formatted recommendation
+Good context — that strengthens the case for including it. Tao Du's group at IIIS works on differentiable physics simulation, soft/reconfigurable robotics, and ML for physical systems, which is a direct match for the "Physical AI" interest you state in your About Me. So this affiliation isn't just a prestige line — it tells a coherent story about your trajectory: vehicle engineering → physics-based simulation & robotics research → ETH Robotics, Systems and Control. Reviewers and recruiters will notice that.
+
+A couple of small refinements before you paste:
+
+Link to Tao Du's lab page, not the generic program page. The lab page (https://people.iiis.tsinghua.edu.cn/~taodu/) shows the actual research; the program URL is administrative and in Chinese, which is less useful to most visitors.
+Mention IIIS. The Institute for Interdisciplinary Information Sciences (Yao Qizhi's institute) is the recognizable signal at Tsinghua for CS/AI; worth naming.
+Make "Visiting Student" specific. If you can add dates (e.g. "Summer 2025") it reads as more concrete and less open-ended.
+Here's the snippet, styled to match your existing entries:
+
+html
+<div class="affiliation">
+  <img src="images/tsinghua.png" alt="Tsinghua University logo">
+  <div class="affiliation-text">
+    <strong>Tsinghua University</strong><br>
+    Visiting Student, <a href="https://people.iiis.tsinghua.edu.cn/~taodu/">Tao Du's Group</a> (IIIS)<br>
+    Tsinghua Global Research Program
+  </div>
+</div>
+If you'd rather keep it to two lines like the KTH/ETH entries, this is a tighter version:
+
+html
+<div class="affiliation">
+  <img src="images/tsinghua.png" alt="Tsinghua University logo">
+  <div class="affiliation-text">
+    <strong>Tsinghua University</strong><br>
+    Visiting Student, <a href="https://people.iiis.tsinghua.edu.cn/~taodu/">Tao Du's Group</a>, IIIS
+  </div>
+</div>
+One small content suggestion while you're editing: in your About Me you could tie the thread together explicitly — e.g. mention that your visiting work involved differentiable simulation or physics-based ML (if it did). Right now the Physical AI interest is stated but unsupported on the page; this affiliation is your evidence for it, and a one-line connection makes the whole site read more cohesively.
+
+How can I add timeline of my Bachelor, current GRP,  and future MSc?
+
+1:59 AM
+
+Architected vertical timeline design replacing affiliations section
+Architected vertical timeline design replacing affiliations section
+A timeline is a natural fit here — it makes the past → present → future narrative explicit, which is exactly what you want to convey. My recommendation: replace the Affiliations section with a Timeline section rather than adding both, since the content overlaps.
+
+Here's a clean vertical timeline that matches your existing minimalist style:
+
+HTML (replace your current Affiliations div):
+
+html
+<div class="section">
+  <h2>Timeline</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">2023 – 2026</div>
+      <div class="timeline-content">
+        <img src="images/kth.jpg" alt="KTH logo">
+        <div>
+          <strong>KTH Royal Institute of Technology</strong><br>
+          BSc in Vehicle Engineering
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item current">
+      <div class="timeline-date">2025</div>
+      <div class="timeline-content">
+        <img src="images/tsinghua.png" alt="Tsinghua logo">
+        <div>
+          <strong>Tsinghua University</strong><br>
+          Visiting Student, <a href="https://people.iiis.tsinghua.edu.cn/~taodu/">Tao Du's Group</a>, IIIS<br>
+          <span class="muted">Tsinghua Global Research Program</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item future">
+      <div class="timeline-date">2026 – 2028</div>
+      <div class="timeline-content">
+        <img src="images/eth.png" alt="ETH Zurich logo">
+        <div>
+          <strong>ETH Zurich</strong><br>
+          MSc in Robotics, Systems and Control
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+CSS (add to style.css):
+
+css
+.timeline {
+  position: relative;
+  margin: 20px 0 0 10px;
+  padding-left: 30px;
+  border-left: 2px solid #ddd;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -38px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background: #0366d6;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.timeline-item.current::before {
+  background: #28a745; /* green for current */
+}
+
+.timeline-item.future::before {
+  background: #fff;
+  border: 3px solid #0366d6; /* hollow for future */
+}
+
+.timeline-date {
+  font-size: 0.9em;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.timeline-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.timeline-content img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.timeline-item.future .timeline-content {
+  opacity: 0.75; /* subtle "not yet" cue */
+}
+
+.muted {
+  color: #666;
+  font-size: 0.9em;
+}
+A few design notes on the choices:
+
+Filled dot = past/current, hollow dot = future. A standard convention that signals tense without needing the word "upcoming."
+Green dot for current is optional — drop the .current::before rule if you'd rather keep one color.
+opacity: 0.75 on the future entry is a subtle cue that ETH hasn't started yet. Remove if you'd rather present it as confirmed and equal-weight.
+Logos shrunk to 60px (from 80px) because timeline rows feel more balanced at that size. Change back if you prefer.
+Mobile: the layout already stacks fine within your 800px container since flex will wrap naturally on narrow screens. If you want extra polish on phones, add @media (max-width: 500px) { .timeline-content { flex-direction: column; align-items: flex-start; } }.
+If you'd rather keep things even simpler (no dots, no line, just dated entries), the minimum-viable version is to add a <div class="timeline-date"> line above each of your existing affiliation blocks and ship — but the vertical timeline reads more intentionally for a portfolio.
+
+Can I somehow preview the current version, or do I have to wait until GitHub updates the website?
+
+2:02 AM
+
+Evaluated local preview options ranked by simplicity
+Evaluated local preview options ranked by simplicity
+You don't need to wait — for a static site like this, you can preview locally in seconds. A few options, from simplest to nicest:
+
+1. Just open the file in a browser (easiest). Double-click index.html, or drag it into Chrome/Firefox/Safari. Everything will work — your CSS, logos, and links all use relative paths, so they resolve fine. After each edit, save the file and hit Cmd+R (Mac) or Ctrl+R (Windows/Linux) in the browser to see the change.
+
+2. Run a tiny local server (recommended for iterating). From the folder containing index.html, run one of:
+
+bash
+python3 -m http.server 8000
+Then visit http://localhost:8000 in your browser. This mimics how a real web server serves the site — sometimes browsers behave slightly differently with file:// URLs (caching, certain JS features), so this is more faithful to what GitHub Pages will show.
+
+3. VS Code Live Server extension (best for fast iteration). If you edit in VS Code, install the "Live Server" extension by Ritwick Dey, then right-click index.html → "Open with Live Server". It opens the page and auto-reloads on every save — no manual refresh. This is the sweet spot if you're tweaking CSS and want to see changes immediately.
+
+For your current task (timeline styling, layout tweaks), I'd go with option 3 if you have VS Code, otherwise just option 1. You only need GitHub once you're happy with how it looks.
+
+CV_Xiangtian_Shi.pdf
+pdf
+
+Can you rewrite everything on my website, using my latest CV and somewhat inherit the current content?
+
+2:06 AM
+
+Architected refined academic portfolio with elegant typography and thoughtful content structure
+Architected refined academic portfolio with elegant typography and thoughtful content structure
+I'll write you a refreshed version that pulls in everything from your CV. While I'm at it, I'm also going to nudge the design a step away from default Arial toward something that feels a bit more like a researcher's page — refined serif headings, a warm off-white background, a single accent color. Still minimal, still content-first; just a touch more intentional.
+
+A few editorial decisions I made (push back on any of these):
+
+Dropped logos from the timeline. Reads more like an academic page; if you want them back, easy to add.
+Skipped phone number and birthday. Standard for public web pages; both stay on the CV.
+Included the esports championship. It's genuinely interesting and competition-grade — distinctive without being unserious. Easy to remove if you'd rather keep the site purely technical.
+Combined "Languages spoken" into the Skills section so it doesn't get its own section just for four lines.
+Used today's date (June 8, 2026) as the reference point — your thesis is "completing", Tsinghua is "this summer", ETH is "this autumn".
+Let me build the files.
+
+
+Created 2 files, read a file
+Created 2 files, read a file
+Both files are ready. Drop them into your repo (replacing your existing index.html and style.css), keep XiangtianShi_CV.pdf next to them, and open it locally with one of the preview methods from before.
+
+Quick map of the new structure:
+
+Header — name, one-line tagline, four links (CV, Email, GitHub, LinkedIn)
+About — two paragraphs: where you are now → what's next; then your intellectual interests
+Timeline — KTH (with the transfer note), Tsinghua (hollow dot, "Upcoming"), ETH (hollow dot, "Admitted")
+Selected Projects — Tsinghua RL, PINNs thesis, Rocket avionics, Solar vehicle
+Skills — programming, tools, areas, and spoken languages
+Teaching — KTH TA and MentorNorge
+Beyond Engineering — violin, sports, esports championship
+Footer — location + email
+Things to double-check / customize:
+
+Make sure your images/ folder isn't needed — I dropped the logos from the timeline. If you'd rather keep them, let me know and I'll add them back at a smaller size.
+The About paragraph — I wrote it for you, but the voice should be yours. Read it out loud; if anything sounds off, tweak.
+Esports line — last call before it ships. Some academic reviewers love personality, some skim past it. I think it works, but it's the most discretionary item.
+Fonts load from Google Fonts — first visit will fetch ~50KB. If you'd rather not depend on Google, swap the @import for system fonts (let me know and I'll do it).
+Tao Du group link is hardcoded — if your visit is hosted under a more specific page later, update it.
+Once it looks right locally, push to GitHub and you're done.
+
+
+Index
+Code · HTML 
+
+Style
+Code · CSS 
+Add the timeline logo back to the previous version, keep everything the same, I will check how it looks
+
+2:14 AM
+
+Architected flex layout to integrate logos alongside timeline entries
+Architected flex layout to integrate logos alongside timeline entries
+Adding logos back into the timeline entries on the right side of each item.
+
+
+Edited 3 files
+Edited 3 files
+Now the matching CSS — make the timeline item a flex container and style the logo:
+
+
+Edited 2 files, read a file
+Edited 2 files, read a file
+Logos are now placed on the right side of each timeline entry, sized at 60px (48px on mobile). Everything else is unchanged. Make sure images/tsinghua.png exists alongside your existing kth.jpg and eth.png and you should be good to preview.
+
+
+Index
+Code · HTML 
+
+Style
+Code · CSS 
+
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+
+
+raw
+Index · HTML
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Xiangtian Shi</title>
+</head>
+<body>
+  <div class="container">
+ 
+    <header>
+      <h1>Xiangtian Shi</h1>
+      <p class="tagline">BSc Vehicle Engineering, KTH &middot; Incoming MSc Robotics, Systems and Control, ETH&nbsp;Zürich</p>
+      <nav class="header-links">
+        <a href="XiangtianShi_CV.pdf" target="_blank">CV</a>
+        <a href="mailto:xiangtian.shi@outlook.com">Email</a>
+        <a href="https://github.com/xitisch">GitHub</a>
+        <a href="https://www.linkedin.com/in/xiangtian-shi-5ab47428b/">LinkedIn</a>
+      </nav>
+    </header>
+ 
+    <section>
+      <h2>About</h2>
+      <p>
+        I'm a final-year BSc student in Vehicle Engineering at KTH Royal Institute of Technology, completing my thesis on Physics-Informed Neural Networks for trajectory planning of unicycle robots. This summer I'm joining <a href="https://people.iiis.tsinghua.edu.cn/~taodu/">Tao Du's group</a> at Tsinghua University (IIIS) as a visiting student, working on reinforcement learning for soft robot control in fluid environments. In September I begin an MSc in Robotics, Systems and Control at ETH&nbsp;Zürich.
+      </p>
+      <p>
+        My background spans applied mathematics, scientific computing, and control systems, with hands-on experience ranging from rocket avionics to physics-based machine learning. I'm drawn to problems where rigorous mathematical modeling meets real-world deployment &mdash; what's increasingly called Physical AI &mdash; and to using these tools to make autonomous systems safer and more capable in unstructured environments.
+      </p>
+    </section>
+ 
+    <section>
+      <h2>Timeline</h2>
+      <div class="timeline">
+ 
+        <div class="timeline-item">
+          <div class="timeline-item-text">
+            <div class="timeline-date">Aug 2023 &ndash; Jun 2026</div>
+            <div class="timeline-title">KTH Royal Institute of Technology</div>
+            <div class="timeline-meta">BSc, Vehicle Engineering &middot; GPA 4.9 / 5.0</div>
+            <div class="timeline-note">Transferred from Mechanical Engineering into the third year of Vehicle Engineering in 2025; all credits recognized.</div>
+          </div>
+          <img class="timeline-logo" src="images/kth.jpg" alt="KTH logo">
+        </div>
+ 
+        <div class="timeline-item future">
+          <div class="timeline-item-text">
+            <div class="timeline-date">Summer 2026 &middot; Upcoming</div>
+            <div class="timeline-title">Tsinghua University</div>
+            <div class="timeline-meta">Visiting Student, <a href="https://people.iiis.tsinghua.edu.cn/~taodu/">Tao Du's Group</a>, IIIS</div>
+            <div class="timeline-note">Tsinghua Global Research Program.</div>
+          </div>
+          <img class="timeline-logo" src="images/tsinghua.png" alt="Tsinghua University logo">
+        </div>
+ 
+        <div class="timeline-item future">
+          <div class="timeline-item-text">
+            <div class="timeline-date">Sep 2026 &ndash; Feb 2028 &middot; Admitted</div>
+            <div class="timeline-title">ETH Zürich</div>
+            <div class="timeline-meta">MSc, Robotics, Systems and Control</div>
+          </div>
+          <img class="timeline-logo" src="images/eth.png" alt="ETH Zürich logo">
+        </div>
+ 
+      </div>
+    </section>
+ 
+    <section>
+      <h2>Selected Projects</h2>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">Reinforcement Learning for Soft Robot Control <span class="tag">Upcoming</span></h3>
+          <div class="project-date">Jun &ndash; Aug 2026</div>
+        </div>
+        <div class="project-affiliation">Tao Du's Group, IIIS &middot; Tsinghua University</div>
+        <p class="project-description">
+          Extending a simulation framework to develop RL-based control of soft robotic systems in fluid environments, using lattice Boltzmann simulations.
+        </p>
+      </article>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">PINNs for Optimal Trajectory Planning of Unicycle Robots</h3>
+          <div class="project-date">Jan &ndash; Jun 2026</div>
+        </div>
+        <div class="project-affiliation">Bachelor Thesis &middot; KTH</div>
+        <p class="project-description">
+          Developed Physics-Informed Neural Network frameworks in PyTorch for optimal trajectory planning of unicycle robots under kinematic and control constraints. Investigated how loss balancing, physics-based constraint enforcement, and obstacle-avoidance strategies affect PINN-based trajectory optimization.
+        </p>
+      </article>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">Rocket Avionics &mdash; Apogee Prediction &amp; Active Stabilization</h3>
+          <div class="project-date">Jan &ndash; Sep 2025</div>
+        </div>
+        <div class="project-affiliation">AESIR Student Rocketry Association &middot; KTH</div>
+        <p class="project-description">
+          Developed numerical algorithms for apogee prediction, improving accuracy from 10% to 1.3% in RocketPy reference simulations. Designed and tuned a PID controller for active stabilization, achieving altitude control within 2.7% error at 3000&nbsp;m.
+        </p>
+      </article>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">Solar-Powered Model Vehicle</h3>
+          <div class="project-date">Jan &ndash; Jun 2024</div>
+        </div>
+        <div class="project-affiliation">Project Course &middot; KTH</div>
+        <p class="project-description">
+          Designed and built a solar-powered model vehicle, integrating mechanical and electrical subsystems and implementing control on Arduino.
+        </p>
+      </article>
+ 
+    </section>
+ 
+    <section>
+      <h2>Skills</h2>
+      <dl class="skills-grid">
+        <dt>Programming</dt>
+        <dd>Python, MATLAB, C++ (Arduino)</dd>
+ 
+        <dt>Frameworks &amp; Tools</dt>
+        <dd>PyTorch, Git, ANSYS, Solid Edge</dd>
+ 
+        <dt>Areas</dt>
+        <dd>Control systems, numerical methods, physics-informed ML, reinforcement learning, optimization</dd>
+ 
+        <dt>Languages</dt>
+        <dd>Norwegian (native), Chinese (native), English (fluent, IELTS 7.5), Swedish (B2)</dd>
+      </dl>
+    </section>
+ 
+    <section>
+      <h2>Teaching</h2>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">Teaching Assistant &mdash; Electrical Engineering</h3>
+          <div class="project-date">Oct 2025 &ndash; Jun 2026</div>
+        </div>
+        <div class="project-affiliation">Unit of Mechatronics &middot; KTH</div>
+        <p class="project-description">
+          Laboratory instruction in circuit theory, signal processing, and mechatronics for undergraduate students.
+        </p>
+      </article>
+ 
+      <article class="project">
+        <div class="project-header">
+          <h3 class="project-title">Mathematics Tutor</h3>
+          <div class="project-date">May 2023 &ndash; Jan 2025</div>
+        </div>
+        <div class="project-affiliation">MentorNorge AS &middot; Norway</div>
+        <p class="project-description">
+          Individualized tutoring in mathematics across secondary and university-preparatory levels.
+        </p>
+      </article>
+ 
+    </section>
+ 
+    <section>
+      <h2>Beyond Engineering</h2>
+      <p>
+        Outside of work I play violin (10+ years, former regional competition winner) and table tennis (regional club), and spend as much time as possible hiking, skiing, and running &mdash; most recently the Stockholm Half Marathon 2025. From 2019 to 2022 I competed in esports; my team won the PUBG Mobile Pro League Western Europe 2021 Spring Season among 16 professional teams.
+      </p>
+    </section>
+ 
+    <footer>
+      <p>Oslo, Norway &middot; <a href="mailto:xiangtian.shi@outlook.com">xiangtian.shi@outlook.com</a></p>
+    </footer>
+ 
+  </div>
+</body>
+</html>
