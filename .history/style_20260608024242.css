@@ -138,8 +138,7 @@ section { margin-bottom: 52px; }
   content: '';
   position: absolute;
   left: -34px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 9px;
   width: 9px;
   height: 9px;
   background: var(--accent);

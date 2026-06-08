@@ -138,19 +138,13 @@ section { margin-bottom: 52px; }
   content: '';
   position: absolute;
   left: -34px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 9px;
   width: 9px;
   height: 9px;
   background: var(--accent);
   border-radius: 50%;
   border: 2px solid var(--bg);
   box-shadow: 0 0 0 1px var(--accent);
-}
-
-.timeline-item.current::before {
-  background: #16a34a;
-  box-shadow: 0 0 0 1px #16a34a;
 }
 
 .timeline-item.future::before {
