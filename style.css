@@ -128,6 +128,21 @@ a:focus-visible {
   border-radius: 3px;
 }
 
+main a,
+footer a {
+  color: inherit;
+  text-decoration-line: none;
+}
+
+main a:hover,
+main a:focus-visible,
+footer a:hover,
+footer a:focus-visible {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+}
+
 ::selection { background: #d8e5f8; }
 
 /* ---------- Header ---------- */
@@ -420,14 +435,6 @@ footer {
 }
 
 footer p { margin-bottom: 0; }
-
-footer a {
-  color: var(--text-muted);
-  text-decoration-line: underline;
-  text-decoration-color: var(--border-strong);
-}
-
-footer a:hover { color: var(--accent-hover); }
 
 /* ---------- Responsive ---------- */
 
