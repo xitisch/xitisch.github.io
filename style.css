@@ -314,12 +314,6 @@ section { margin-bottom: 64px; }
   font-size: 0.95rem;
 }
 
-.timeline-note {
-  margin-top: 5px;
-  color: var(--text-muted);
-  font-size: 0.86rem;
-}
-
 /* ---------- Projects ---------- */
 
 .project {
