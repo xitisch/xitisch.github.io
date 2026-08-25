@@ -9,7 +9,6 @@
   --accent-hover: #173c78;
   --accent-soft: #edf3fc;
   --current: #2b7a5a;
-  --current-soft: #e9f4ee;
   --serif: 'Fraunces', Georgia, serif;
   --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -301,20 +300,6 @@ section { margin-bottom: 64px; }
   font-weight: 600;
   letter-spacing: 0.065em;
   text-transform: uppercase;
-}
-
-.status-label {
-  display: inline-block;
-  margin-left: 8px;
-  padding: 2px 6px;
-  border: 1px solid #bfddce;
-  border-radius: 999px;
-  background: var(--current-soft);
-  color: #1f6649;
-  font-size: 0.68rem;
-  letter-spacing: 0.045em;
-  line-height: 1.35;
-  vertical-align: 1px;
 }
 
 .timeline-title {
