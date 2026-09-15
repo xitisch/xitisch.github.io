@@ -231,13 +231,33 @@ footer a:focus-visible {
 
 section { margin-bottom: 64px; }
 
+.about-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 32px;
+  align-items: start;
+}
+
 .about-copy {
+  grid-column: 1;
+  grid-row: 1;
   max-width: 72ch;
   font-size: 1.02rem;
   line-height: 1.76;
 }
 
 .about-copy p:last-child { margin-bottom: 0; }
+
+.profile-photo {
+  display: block;
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
 
 /* ---------- Timeline ---------- */
 
@@ -467,6 +487,19 @@ footer p { margin-bottom: 0; }
   .header-links a { padding-inline: 10px; }
 
   section { margin-bottom: 52px; }
+
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .profile-photo,
+  .about-copy {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .profile-photo { width: 180px; }
 
   .timeline {
     margin-left: 6px;
