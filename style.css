@@ -158,15 +158,6 @@ footer a:focus-visible {
 
 .header-copy { min-width: 0; }
 
-.header-kicker {
-  margin-bottom: 14px;
-  color: var(--accent);
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .tagline {
   max-width: 52ch;
   margin-bottom: 0;
@@ -471,11 +462,6 @@ footer p { margin-bottom: 0; }
     gap: 24px;
     margin-bottom: 52px;
     padding-bottom: 28px;
-  }
-
-  .header-kicker {
-    margin-bottom: 11px;
-    font-size: 0.7rem;
   }
 
   .header-links {
