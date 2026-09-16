@@ -185,13 +185,6 @@ footer a:focus-visible {
 
 .header-copy { min-width: 0; }
 
-.tagline {
-  max-width: 52ch;
-  margin-bottom: 0;
-  color: var(--text-muted);
-  font-size: 1.04rem;
-}
-
 .header-actions {
   display: flex;
   gap: 9px;

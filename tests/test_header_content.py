@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,23 @@ class HeaderContentTests(unittest.TestCase):
 
         self.assertNotIn("Robotics &middot; Control &middot; Physical AI", html)
         self.assertNotIn('class="header-kicker"', html)
+
+    def test_degree_tagline_is_removed_from_header(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+
+        self.assertNotIn('class="tagline"', html)
+
+    def test_personal_interests_end_the_about_section(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+        about = re.search(
+            r'<section id="about">(.*?)</section>', html, flags=re.DOTALL
+        )
+
+        self.assertIsNotNone(about)
+        self.assertRegex(
+            about.group(1),
+            r"sim-to-real robotics\. I enjoy hiking, skiing and jogging\.\s*</p>\s*</div>\s*</div>\s*$",
+        )
 
 
 if __name__ == "__main__":
