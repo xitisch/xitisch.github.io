@@ -18,6 +18,12 @@ class HeaderContentTests(unittest.TestCase):
 
         self.assertNotIn('class="tagline"', html)
 
+    def test_about_heading_uses_natural_wording(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+
+        self.assertIn("<h2>About Me</h2>", html)
+        self.assertNotIn("<h2>About Myself</h2>", html)
+
     def test_personal_interests_end_the_about_section(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
         about = re.search(
