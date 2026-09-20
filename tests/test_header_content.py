@@ -13,6 +13,12 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIn("<title>Xiangtian Shi</title>", html)
         self.assertNotIn("<title>Xiangtian Shi | Robotics and Control</title>", html)
 
+    def test_cv_link_uses_minimal_label(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+
+        self.assertIn("<span>CV</span>", html)
+        self.assertNotIn("<span>View CV</span>", html)
+
     def test_research_area_kicker_is_removed(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
 
