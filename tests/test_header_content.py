@@ -45,7 +45,7 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIsNotNone(about)
         self.assertRegex(
             about.group(1),
-            r"sim-to-real robotics\. I enjoy hiking, skiing and jogging\.\s*</p>\s*</div>\s*</div>\s*$",
+            r"sim-to-real robotics\. I enjoy hiking, skiing, jogging, and other outdoor activities\.\s*</p>\s*</div>\s*</div>\s*$",
         )
 
     def test_footer_lists_locations_without_duplicate_email(self):
