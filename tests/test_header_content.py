@@ -7,6 +7,12 @@ INDEX_HTML = Path(__file__).resolve().parents[1] / "index.html"
 
 
 class HeaderContentTests(unittest.TestCase):
+    def test_page_title_contains_only_the_name(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+
+        self.assertIn("<title>Xiangtian Shi</title>", html)
+        self.assertNotIn("<title>Xiangtian Shi | Robotics and Control</title>", html)
+
     def test_research_area_kicker_is_removed(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
 
