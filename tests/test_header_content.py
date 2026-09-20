@@ -42,6 +42,15 @@ class HeaderContentTests(unittest.TestCase):
             r"sim-to-real robotics\. I enjoy hiking, skiing and jogging\.\s*</p>\s*</div>\s*</div>\s*$",
         )
 
+    def test_footer_lists_locations_without_duplicate_email(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+        footer = re.search(r"<footer>(.*?)</footer>", html, flags=re.DOTALL)
+
+        self.assertIsNotNone(footer)
+        self.assertIn("Oslo, Norway &middot; Zürich, Switzerland", footer.group(1))
+        self.assertNotIn("mailto:", footer.group(1))
+        self.assertNotIn("xiangtian.shi@outlook.com", footer.group(1))
+
 
 if __name__ == "__main__":
     unittest.main()
