@@ -45,21 +45,23 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIsNotNone(about)
         return about.group(1)
 
-    def test_personal_interests_follow_the_research_interests(self):
+    def test_research_interests_stand_in_their_own_paragraph(self):
         about = self._about_section()
 
         self.assertRegex(
             about,
-            r"sim-to-real robotics\. Outside my studies and research, I enjoy "
-            r"hiking, skiing, jogging, and other outdoor activities\.",
+            r"<p>\s*I'm interested in physics-based modeling and simulation,"
+            r".*?sim-to-real robotics\.\s*</p>",
         )
 
-    def test_esports_paragraph_closes_the_about_section(self):
+    def test_personal_interests_and_esports_close_the_about_section(self):
         about = self._about_section()
 
         self.assertRegex(
             about,
-            r"professional PUBG Mobile player.*?transferred\.\s*</p>\s*</div>\s*</div>\s*$",
+            r"Outside my studies and research, I enjoy hiking, skiing, jogging,"
+            r".*?professional PUBG Mobile player.*?competing internationally\."
+            r"\s*</p>\s*</div>\s*</div>\s*$",
         )
 
     def test_esports_paragraph_states_the_result_from_the_cv(self):
@@ -67,6 +69,16 @@ class HeaderContentTests(unittest.TestCase):
 
         self.assertIn("PUBG Mobile Pro League Western Europe Spring 2021", about)
         self.assertIn("two years", about)
+
+    def test_esports_title_links_to_the_liquipedia_tournament_page(self):
+        about = self._about_section()
+
+        self.assertRegex(
+            about,
+            r'<a href="https://liquipedia\.net/pubgmobile/PUBG_Mobile_Pro_League'
+            r'/Western_Europe/Season_1">'
+            r"PUBG Mobile Pro League Western Europe Spring 2021</a>",
+        )
 
     def test_about_copy_has_no_stray_blank_lines_inside_paragraphs(self):
         about = self._about_section()
