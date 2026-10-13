@@ -36,24 +36,50 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIn("<h2>About Me</h2>", html)
         self.assertNotIn("<h2>About Myself</h2>", html)
 
-    def test_personal_interests_end_the_about_section(self):
+    def _about_section(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
         about = re.search(
             r'<section id="about">(.*?)</section>', html, flags=re.DOTALL
         )
 
         self.assertIsNotNone(about)
+        return about.group(1)
+
+    def test_personal_interests_follow_the_research_interests(self):
+        about = self._about_section()
+
         self.assertRegex(
-            about.group(1),
-            r"sim-to-real robotics\. I enjoy hiking, skiing, jogging, and other outdoor activities\.\s*</p>\s*</div>\s*</div>\s*$",
+            about,
+            r"sim-to-real robotics\. Outside my studies and research, I enjoy "
+            r"hiking, skiing, jogging, and other outdoor activities\.",
         )
+
+    def test_esports_paragraph_closes_the_about_section(self):
+        about = self._about_section()
+
+        self.assertRegex(
+            about,
+            r"professional PUBG Mobile player.*?transferred\.\s*</p>\s*</div>\s*</div>\s*$",
+        )
+
+    def test_esports_paragraph_states_the_result_from_the_cv(self):
+        about = self._about_section()
+
+        self.assertIn("PUBG Mobile Pro League Western Europe Spring 2021", about)
+        self.assertIn("two years", about)
+
+    def test_about_copy_has_no_stray_blank_lines_inside_paragraphs(self):
+        about = self._about_section()
+
+        for paragraph in re.findall(r"<p>(.*?)</p>", about, flags=re.DOTALL):
+            self.assertNotRegex(paragraph, r"\n\s*\n")
 
     def test_footer_lists_locations_without_duplicate_email(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
         footer = re.search(r"<footer>(.*?)</footer>", html, flags=re.DOTALL)
 
         self.assertIsNotNone(footer)
-        self.assertIn("Oslo, Norway &middot; Zürich, Switzerland", footer.group(1))
+        self.assertIn("Zürich, Switzerland &middot; Oslo, Norway", footer.group(1))
         self.assertNotIn("mailto:", footer.group(1))
         self.assertNotIn("xiangtian.shi@outlook.com", footer.group(1))
 
