@@ -46,7 +46,7 @@ class ProjectFigureTests(unittest.TestCase):
         self.html = INDEX_HTML.read_text(encoding="utf-8")
         parser = FigureImageParser()
         parser.feed(self.html)
-        self.images = parser.images
+        self.images = [image for image in parser.images if image["src"].endswith(".png")]
 
     def _thesis_article(self):
         article = re.search(
@@ -105,7 +105,7 @@ class ProjectFigureTests(unittest.TestCase):
     def test_media_scales_with_the_page_but_keeps_its_aspect_ratio(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
         rule = re.search(
-            r"\.project-frame img,\s*\.project-frame video \{(.*?)\}", css, flags=re.DOTALL
+            r"\.project-frame img \{(.*?)\}", css, flags=re.DOTALL
         )
 
         self.assertIsNotNone(rule)

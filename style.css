@@ -460,20 +460,19 @@ section { margin-bottom: 64px; }
   background: #fff;
 }
 
-.project-frame img,
-.project-frame video {
+.project-frame picture { display: block; }
+
+.project-frame img {
   display: block;
   width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.project-frame-video {
+.project-frame-bleed {
   padding: 0;
   background: #000;
 }
-
-.project-frame video { cursor: pointer; }
 
 .project-figure-compact .project-frame { max-width: 639px; }
 
