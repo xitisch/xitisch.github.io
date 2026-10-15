@@ -19,6 +19,16 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIn("<span>CV</span>", html)
         self.assertNotIn("<span>View CV</span>", html)
 
+    def test_cv_link_points_to_the_committed_pdf(self):
+        html = INDEX_HTML.read_text(encoding="utf-8")
+        link = re.search(r'<a class="primary-link" href="([^"]+)"', html)
+
+        self.assertIsNotNone(link)
+        self.assertEqual(link.group(1), "CV_Xiangtian_Shi.pdf")
+        pdf = INDEX_HTML.parent / link.group(1)
+        self.assertTrue(pdf.is_file())
+        self.assertEqual(pdf.read_bytes()[:5], b"%PDF-")
+
     def test_research_area_kicker_is_removed(self):
         html = INDEX_HTML.read_text(encoding="utf-8")
 
