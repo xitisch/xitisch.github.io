@@ -48,6 +48,19 @@ class MediaLayoutTests(unittest.TestCase):
             css,
         )
 
+    def test_rocket_claims_match_the_apogee_animation(self):
+        article = re.search(
+            r'<article class="project">(?:(?!</article>).)*?Rocket Avionics.*?</article>',
+            self.html,
+            flags=re.DOTALL,
+        ).group(0)
+
+        # Settled errors read from the GIF labels (t = 8.5 s onward).
+        self.assertIn("about 1.5&nbsp;s after burnout", article)
+        self.assertIn("within <strong>0.6%</strong> of the true apogee", article)
+        self.assertIn("up to <strong>4.2%</strong>", article)
+        self.assertNotIn("10% to 1.3%", article)
+
     def test_trajectory_embeds_are_lazy_and_load_only_pinned_plotly(self):
         iframes = re.findall(r"<iframe [^>]*></iframe>", self.html)
         self.assertEqual(len(iframes), 2)

@@ -59,7 +59,7 @@ class HeaderContentTests(unittest.TestCase):
 
         self.assertRegex(
             about,
-            r"Outside my studies and research, I enjoy hiking, skiing, jogging,"
+            r"Outside my studies, I enjoy hiking, skiing, jogging,"
             r".*?professional PUBG Mobile player.*?competing internationally\."
             r"\s*</p>\s*</div>\s*</div>\s*$",
         )
