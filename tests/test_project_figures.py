@@ -89,17 +89,32 @@ class ProjectFigureTests(unittest.TestCase):
             r'<figure class="project-figure[^"]*">(.*?)</figure>', self.html, flags=re.DOTALL
         )
 
-        self.assertEqual(len(figures), len(THESIS_FIGURES))
+        self.assertGreaterEqual(len(figures), len(THESIS_FIGURES))
         for figure in figures:
             self.assertRegex(figure, r"<figcaption>\S.*?</figcaption>")
 
     def test_plots_sit_on_white_cards_in_both_themes(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
-        rule = re.search(r"\.project-figure img \{(.*?)\}", css, flags=re.DOTALL)
+        frame = re.search(r"\.project-frame \{(.*?)\}", css, flags=re.DOTALL)
+
+        self.assertIsNotNone(frame)
+        self.assertIn("background: #fff;", frame.group(1))
+        for src in THESIS_FIGURES:
+            self.assertIn(f'<div class="project-frame"><img src="{src}"', self.html)
+
+    def test_media_scales_with_the_page_but_keeps_its_aspect_ratio(self):
+        css = STYLE_CSS.read_text(encoding="utf-8")
+        rule = re.search(
+            r"\.project-frame img,\s*\.project-frame video \{(.*?)\}", css, flags=re.DOTALL
+        )
 
         self.assertIsNotNone(rule)
-        self.assertIn("background: #fff;", rule.group(1))
         self.assertIn("width: 100%;", rule.group(1))
+        self.assertIn("height: auto;", rule.group(1))
+        self.assertIn("object-fit: contain;", rule.group(1))
+        # Padding or a fixed height on the media itself would distort its ratio.
+        self.assertNotIn("padding", rule.group(1))
+        self.assertNotRegex(rule.group(1), r"(?<!-)height: \d")
 
 
 if __name__ == "__main__":

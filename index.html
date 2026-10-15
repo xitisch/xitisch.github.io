@@ -129,6 +129,23 @@
 
         <article class="project">
           <div class="project-header">
+            <h3 class="project-title">ORCA Robotic Hand</h3>
+            <div class="project-date"><time datetime="2026-09">Sep 2026</time> &ndash; Present</div>
+          </div>
+          <div class="project-affiliation">Real World Robotics Project Course &middot; ETH Z&uuml;rich</div>
+          <div class="project-body">
+            <p class="project-description">
+              Calibrating an ORCA open-source dexterous robotic hand as part of the Real World Robotics project course.
+            </p>
+            <figure class="project-figure project-figure-portrait">
+              <div class="project-frame project-frame-video"><video src="images/orca-hand.mp4" poster="images/orca-hand-poster.jpg" width="576" height="720" muted loop playsinline controls preload="metadata" data-autoplay aria-label="The ORCA robotic hand opening and closing its fingers on a lab bench."></video></div>
+              <figcaption>Calibration run on the bench.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-header">
             <h3 class="project-title">Biomimetic Flapping-Wing Robot Sim-to-Real Research</h3>
             <div class="project-date"><time datetime="2026-06">Jun 2026</time> &ndash; Present</div>
           </div>
@@ -136,6 +153,10 @@
           <p class="project-description">
             Developing an embedded wireless control interface with SBUS communication, designing mechanical components for experimental data acquisition, and contributing to the simulation workflow for physical validation.
           </p>
+          <figure class="project-figure">
+            <div class="project-frame project-frame-video"><video src="images/flapping-wing.mp4" poster="images/flapping-wing-poster.jpg" width="960" height="540" muted loop playsinline controls preload="metadata" data-autoplay aria-label="The butterfly-like flapping-wing robot on its test fixture, starting at rest and flapping through several commanded modes."></video></div>
+            <figcaption>Bench test on the experimental fixture, cycling through the commanded flapping modes.</figcaption>
+          </figure>
         </article>
 
         <article class="project">
@@ -148,17 +169,17 @@
             Developed Physics-Informed Neural Network frameworks in PyTorch for optimal trajectory planning of unicycle robots under kinematic and control constraints. Investigated how loss balancing, physics-based constraint enforcement, and obstacle-avoidance strategies affect PINN-based trajectory optimization.
           </p>
           <figure class="project-figure project-figure-compact">
-            <img src="images/thesis-three-obstacles.png" alt="Plot of a smooth path from (0, 0) to (1, 0) that dips below the first circular obstacle, rises over the middle one, and dips below the third." width="621" height="317" loading="lazy" decoding="async">
+            <div class="project-frame"><img src="images/thesis-three-obstacles.png" alt="Plot of a smooth path from (0, 0) to (1, 0) that dips below the first circular obstacle, rises over the middle one, and dips below the third." width="621" height="317" loading="lazy" decoding="async"></div>
             <figcaption>A PINN-planned unicycle path weaving between three circular obstacles, with start and goal enforced as hard constraints.</figcaption>
           </figure>
           <details class="project-more">
             <summary>More figures</summary>
             <figure class="project-figure">
-              <img src="images/thesis-circle-vs-square.png" alt="Two plots side by side: the planned path curves below a circular obstacle on the left and below a square obstacle on the right." width="1600" height="596" loading="lazy" decoding="async">
+              <div class="project-frame"><img src="images/thesis-circle-vs-square.png" alt="Two plots side by side: the planned path curves below a circular obstacle on the left and below a square obstacle on the right." width="1600" height="596" loading="lazy" decoding="async"></div>
               <figcaption>The same start and goal around a circular and a square obstacle.</figcaption>
             </figure>
             <figure class="project-figure">
-              <img src="images/thesis-euler-lagrange-y.png" alt="Two plots of the Euler&ndash;Lagrange condition in y over time: the two sides overlap closely for the circle and diverge slightly in the middle for the square." width="1600" height="560" loading="lazy" decoding="async">
+              <div class="project-frame"><img src="images/thesis-euler-lagrange-y.png" alt="Two plots of the Euler&ndash;Lagrange condition in y over time: the two sides overlap closely for the circle and diverge slightly in the middle for the square." width="1600" height="560" loading="lazy" decoding="async"></div>
               <figcaption>Optimality check: both sides of the Euler&ndash;Lagrange equation in y along each path (solid vs. dashed). They agree closely for the circle and drift apart around the square&rsquo;s corners.</figcaption>
             </figure>
           </details>
@@ -219,5 +240,6 @@
     </footer>
 
   </div>
+  <script src="media.js" defer></script>
 </body>
 </html>

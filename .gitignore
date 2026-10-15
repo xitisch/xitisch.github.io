@@ -1,3 +1,7 @@
 .history/
 __pycache__/
 images/personal-image.JPG
+
+# Original camera files stay out of the repo; web versions live in images/.
+*.MOV
+*.mov

@@ -448,20 +448,43 @@ section { margin-bottom: 64px; }
   font-weight: 600;
 }
 
-/* Plots are exported on white, so they sit on a white card in both themes. */
+/* Plots are exported on white, so they sit on a white card in both themes.
+   The card is a wrapper so the media inside keeps its own aspect ratio. */
 .project-figure { margin: 18px 0 0; }
 
-.project-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
+.project-frame {
+  overflow: hidden;
   padding: 8px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
 }
 
-.project-figure-compact img { max-width: 639px; }
+.project-frame img,
+.project-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.project-frame-video {
+  padding: 0;
+  background: #000;
+}
+
+.project-frame video { cursor: pointer; }
+
+.project-figure-compact .project-frame { max-width: 639px; }
+
+.project-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 28px;
+  align-items: start;
+}
+
+.project-body .project-figure { margin-top: 4px; }
 
 .project-figure figcaption {
   max-width: 74ch;
@@ -629,6 +652,13 @@ footer p { margin-bottom: 0; }
   }
 
   .project-date { justify-self: start; }
+
+  .project-body {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .project-figure-portrait { max-width: 260px; }
 
   .skills-grid { grid-template-columns: 1fr; }
 
