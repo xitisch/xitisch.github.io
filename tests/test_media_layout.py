@@ -64,7 +64,7 @@ class MediaLayoutTests(unittest.TestCase):
         # Airbrake controller result from the nominal RocketPy simulation.
         self.assertIn("Apogee Prediction &amp; Airbrake Control", article)
         self.assertIn("EuRoC 2025", article)
-        self.assertIn("from 3,047&nbsp;m down to <strong>2,993&nbsp;m</strong>", article)
+        self.assertIn("In a nominal RocketPy simulation, it brought the apogee within", article)
         self.assertIn("within <strong>0.2%</strong> of the 3,000&nbsp;m target", article)
 
         # Prediction came first, so its paragraph and figures precede the controller's.
