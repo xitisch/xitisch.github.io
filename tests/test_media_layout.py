@@ -101,6 +101,17 @@ class MediaLayoutTests(unittest.TestCase):
                 self.assertIn('integrity="sha256-', page)
                 self.assertIn("margin: 0;", page)
 
+    def test_prediction_part_uses_earlier_rocket_and_only_airbrake_part_says_freya(self):
+        controller = self.html.index("PID-based airbrake controller")
+        prediction = self.html[self.html.index("I started with apogee prediction"):controller]
+
+        self.assertIn("using flight data from an earlier AESIR rocket", prediction)
+        self.assertNotIn("Freya", prediction)
+        for theme in ("light", "dark"):
+            chart = (IMAGES / "rocket" / f"trajectory-{theme}.html").read_text(encoding="utf-8")
+            self.assertIn('"text":"Flight path to apogee (earlier rocket)"', chart)
+            self.assertNotIn("Freya", chart)
+
     def test_rocket_story_alternates_text_gif_and_3d_chart(self):
         order = [
             "I started with apogee prediction",
