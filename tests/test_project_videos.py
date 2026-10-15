@@ -92,14 +92,14 @@ class ProjectVideoTests(unittest.TestCase):
             # moov before mdat lets browsers start playing before the download ends.
             self.assertLess(data.index(b"moov"), data.index(b"mdat"), src)
 
-    def test_video_markup_matches_files_and_degrades_gracefully(self):
+    def test_videos_autoplay_without_a_click_and_match_their_files(self):
         for src, (width, height) in EXPECTED_VIDEOS.items():
             video = self.videos[src]
             self.assertEqual((video.get("width"), video.get("height")), (str(width), str(height)))
-            for attribute in ("muted", "loop", "playsinline", "controls", "data-autoplay"):
+            # Autoplay comes from the HTML itself, so no click or script is needed.
+            for attribute in ("autoplay", "muted", "loop", "playsinline"):
                 self.assertIn(attribute, video, f"{src} lacks {attribute}")
-            self.assertNotIn("autoplay", video)
-            self.assertEqual(video.get("preload"), "metadata")
+            self.assertNotIn("controls", video)
             self.assertGreater(len(video.get("aria-label", "")), 30)
             poster = ROOT / video["poster"]
             self.assertTrue(poster.is_file())
@@ -111,9 +111,9 @@ class ProjectVideoTests(unittest.TestCase):
 
         self.assertEqual(self.html.count('<script src="media.js" defer></script>'), 1)
         self.assertIn("(prefers-reduced-motion: reduce)", script)
-        self.assertIn("video[data-autoplay]", script)
-        self.assertIn("video.controls = false", script)
-        self.assertIn("video.muted = true", script)
+        self.assertIn("video[autoplay]", script)
+        self.assertIn("video.pause();\n      video.controls = true;", script)
+        self.assertIn("video.play().catch(", script)
 
     def test_original_camera_files_are_not_committed(self):
         ignored = (ROOT / ".gitignore").read_text(encoding="utf-8").split()
