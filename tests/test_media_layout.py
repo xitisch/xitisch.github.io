@@ -39,7 +39,7 @@ class MediaLayoutTests(unittest.TestCase):
         light = re.findall(r'class="theme-light-only".*?(?:src|srcset)="([^"]+)"', self.html)
         dark = re.findall(r'class="theme-dark-only".*?(?:src|srcset)="([^"]+)"', self.html)
 
-        self.assertEqual(len(light), 3)
+        self.assertEqual(len(light), 4)
         self.assertEqual([path.replace("light", "dark") for path in light], dark)
         css = STYLE_CSS.read_text(encoding="utf-8")
         self.assertIn(
@@ -85,20 +85,33 @@ class MediaLayoutTests(unittest.TestCase):
 
     def test_trajectory_embeds_are_lazy_and_load_only_pinned_plotly(self):
         iframes = re.findall(r"<iframe [^>]*></iframe>", self.html)
-        self.assertEqual(len(iframes), 2)
-        trajectory = self.html.index("<summary>Interactive 3D trajectory</summary>")
+        self.assertEqual(len(iframes), 4)
         for iframe in iframes:
-            self.assertGreater(self.html.index(iframe), trajectory)
+            # Every 3D chart sits inside an open <details> so Plotly loads on demand.
+            before = self.html[: self.html.index(iframe)]
+            self.assertGreater(before.rfind("<details"), before.rfind("</details>"))
             self.assertIn('loading="lazy"', iframe)
             self.assertRegex(iframe, r'title="[^"]{30,}"')
 
-        for theme in ("light", "dark"):
-            page = (IMAGES / "rocket" / f"trajectory-{theme}.html").read_text(encoding="utf-8")
-            scripts = re.findall(r'<script[^>]*src="([^"]+)"[^>]*>', page)
-            self.assertEqual(scripts, ["https://cdn.plot.ly/plotly-4.1.1.min.js"])
-            self.assertIn('integrity="sha256-', page)
-            self.assertIn("margin: 0;", page)
+        for name in ("trajectory", "airbrake-trajectory"):
+            for theme in ("light", "dark"):
+                page = (IMAGES / "rocket" / f"{name}-{theme}.html").read_text(encoding="utf-8")
+                scripts = re.findall(r'<script[^>]*src="([^"]+)"[^>]*>', page)
+                self.assertEqual(scripts, ["https://cdn.plot.ly/plotly-4.1.1.min.js"])
+                self.assertIn('integrity="sha256-', page)
+                self.assertIn("margin: 0;", page)
 
+    def test_rocket_story_alternates_text_gif_and_3d_chart(self):
+        order = [
+            "I started with apogee prediction",
+            "images/rocket/apogee-light.gif",
+            "images/rocket/trajectory-light.html",
+            "PID-based airbrake controller",
+            "images/rocket/airbrake-light.gif",
+            "images/rocket/airbrake-trajectory-light.html",
+        ]
+        positions = [self.html.index(marker) for marker in order]
+        self.assertEqual(positions, sorted(positions))
 
 if __name__ == "__main__":
     unittest.main()
