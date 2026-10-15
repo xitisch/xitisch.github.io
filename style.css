@@ -476,6 +476,18 @@ section { margin-bottom: 64px; }
 
 .project-figure-compact .project-frame { max-width: 639px; }
 
+.project-frame iframe {
+  display: block;
+  width: 100%;
+  height: 640px;
+  border: 0;
+}
+
+/* Media with a light and a dark version follows the theme toggle. Hidden
+   lazy images and iframes are never downloaded. */
+:root[data-theme="dark"] .theme-light-only,
+:root:not([data-theme="dark"]) .theme-dark-only { display: none; }
+
 .project-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;

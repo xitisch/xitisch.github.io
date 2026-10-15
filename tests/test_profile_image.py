@@ -27,7 +27,7 @@ class ProfileImageTests(unittest.TestCase):
         self.image = parser.profile_images[0]
 
     def test_profile_image_has_accessible_markup(self):
-        self.assertEqual(self.image.get("src"), "images/portrait.jpg")
+        self.assertEqual(self.image.get("src"), "images/about/portrait.jpg")
         self.assertEqual(self.image.get("alt"), "Portrait of Xiangtian Shi")
         self.assertEqual(self.image.get("width"), "900")
         self.assertEqual(self.image.get("height"), "1200")

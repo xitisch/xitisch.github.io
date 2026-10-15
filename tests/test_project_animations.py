@@ -9,14 +9,18 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_HTML = ROOT / "index.html"
 
 EXPECTED_ANIMATIONS = {
-    "images/orca-hand.gif": (320, 400),
-    "images/flapping-wing.gif": (640, 360),
+    "images/orca-hand/calibration.gif": (320, 400),
+    "images/flapping-wing/bench-test.gif": (640, 360),
+    "images/rocket/apogee-light.gif": (1040, 858),
+    "images/rocket/apogee-dark.gif": (1040, 858),
 }
 
 # Loop length in seconds. The flapping clip is trimmed so the wings never rest.
 EXPECTED_DURATIONS = {
-    "images/orca-hand.gif": 11.1,
-    "images/flapping-wing.gif": 5.6,
+    "images/orca-hand/calibration.gif": 11.1,
+    "images/flapping-wing/bench-test.gif": 5.6,
+    "images/rocket/apogee-light.gif": 8.0,
+    "images/rocket/apogee-dark.gif": 8.0,
 }
 
 
@@ -66,7 +70,11 @@ def gif_frame_delays(data):
     return delays
 
 
-def jpeg_size(data):
+def image_size(data):
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return struct.unpack(">II", data[16:24])
+    if data[:3] != b"\xff\xd8\xff":
+        raise AssertionError("still frame is neither PNG nor JPEG")
     offset = 2
     while offset < len(data):
         marker, length = struct.unpack(">2sH", data[offset:offset + 4])
@@ -86,10 +94,11 @@ class ProjectAnimationTests(unittest.TestCase):
 
     def test_animations_sit_in_their_projects(self):
         self.assertEqual(set(self.pictures), set(EXPECTED_ANIMATIONS))
-        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("images/orca-hand.gif"))
+        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("images/orca-hand/calibration.gif"))
         self.assertLess(
-            self.html.index("Biomimetic Flapping-Wing Robot"), self.html.index("images/flapping-wing.gif")
+            self.html.index("Biomimetic Flapping-Wing Robot"), self.html.index("images/flapping-wing/bench-test.gif")
         )
+        self.assertLess(self.html.index("Rocket Avionics"), self.html.index("images/rocket/apogee-light.gif"))
 
     def test_gifs_loop_forever_and_match_their_markup(self):
         for src, (width, height) in EXPECTED_ANIMATIONS.items():
@@ -117,9 +126,8 @@ class ProjectAnimationTests(unittest.TestCase):
             self.assertEqual(sources[0].get("media"), "(prefers-reduced-motion: reduce)")
             poster = ROOT / sources[0]["srcset"]
             data = poster.read_bytes()
-            self.assertEqual(data[:3], b"\xff\xd8\xff")
             self.assertLess(len(data), 200 * 1024)
-            poster_width, poster_height = jpeg_size(data)
+            poster_width, poster_height = image_size(data)
             self.assertAlmostEqual(poster_width / poster_height, width / height, places=2)
 
     def test_no_video_players_or_scripts_remain(self):
