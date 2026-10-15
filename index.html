@@ -192,11 +192,11 @@
           </div>
           <div class="project-affiliation">AESIR Student Rocketry Association &middot; KTH</div>
           <p class="project-description">
-            Our competition rocket for EuRoC 2025 had to reach a 3&nbsp;km apogee, so I co-developed a PID-based airbrake controller to steer it there: it predicts the apogee 100 times a second and adjusts the airbrakes to close the gap. In a nominal RocketPy simulation (standard atmosphere, no wind), it brought the apogee from 3,047&nbsp;m down to <strong>2,993&nbsp;m</strong>, within <strong>0.2%</strong> of the target. Along the way, I compared apogee predictors: once settled, about 1.5&nbsp;s after burnout, a ballistic-coefficient forecast stays within <strong>0.6%</strong> of the true apogee, while a drag-table baseline is off by up to <strong>4.2%</strong>.
+            Our competition rocket for EuRoC 2025 had to reach a 3&nbsp;km apogee. I started with apogee prediction and compared two predictors in RocketPy simulations. Once settled, about 1.5&nbsp;s after burnout, a ballistic-coefficient forecast stays within <strong>0.6%</strong> of the true apogee, while a drag-table baseline is off by up to <strong>4.2%</strong>.
           </p>
           <figure class="project-figure project-figure-compact">
             <div class="project-frame project-frame-bleed"><picture class="theme-light-only"><source media="(prefers-reduced-motion: reduce)" srcset="images/rocket/apogee-light-still.png"><img src="images/rocket/apogee-light.gif" alt="Animated chart of a rocket climbing to a 4,558&nbsp;m apogee while two apogee forecasts, a drag table and a fixed ballistic coefficient, converge on the true value after burnout." width="1040" height="858" loading="lazy" decoding="async"></picture><picture class="theme-dark-only"><source media="(prefers-reduced-motion: reduce)" srcset="images/rocket/apogee-dark-still.png"><img src="images/rocket/apogee-dark.gif" alt="Animated chart of a rocket climbing to a 4,558&nbsp;m apogee while two apogee forecasts, a drag table and a fixed ballistic coefficient, converge on the true value after burnout." width="1040" height="858" loading="lazy" decoding="async"></picture></div>
-            <figcaption>Forecasting the final apogee during coast: after burnout (shaded), both predictors converge on the true 4,558&nbsp;m apogee.</figcaption>
+            <figcaption>Forecasting the final apogee during coast. After burnout (shaded), both predictors converge on the true 4,558&nbsp;m apogee.</figcaption>
           </figure>
           <details class="project-more">
             <summary>Interactive 3D trajectory</summary>
@@ -205,6 +205,9 @@
               <figcaption>Simulated flight path of Freya to apogee, coloured by speed. Drag to rotate, scroll to zoom.</figcaption>
             </figure>
           </details>
+          <p class="project-description">
+            Building on that, I co-developed a PID-based airbrake controller that predicts the apogee at 100&nbsp;Hz and actively adjusts the airbrakes based on that prediction. In a nominal RocketPy simulation (standard atmosphere, no wind), it brought the apogee from 3,047&nbsp;m down to <strong>2,993&nbsp;m</strong>, within <strong>0.2%</strong> of the 3,000&nbsp;m target.
+          </p>
         </article>
 
         <article class="project">

@@ -443,6 +443,10 @@ section { margin-bottom: 64px; }
   line-height: 1.72;
 }
 
+/* A second paragraph after a figure starts a new part of the story. */
+.project-figure + .project-description,
+.project-more + .project-description { margin-top: 18px; }
+
 .project-description strong {
   color: var(--accent-hover);
   font-weight: 600;

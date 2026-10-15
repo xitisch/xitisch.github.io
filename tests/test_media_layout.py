@@ -65,7 +65,17 @@ class MediaLayoutTests(unittest.TestCase):
         self.assertIn("Apogee Prediction &amp; Airbrake Control", article)
         self.assertIn("EuRoC 2025", article)
         self.assertIn("from 3,047&nbsp;m down to <strong>2,993&nbsp;m</strong>", article)
-        self.assertIn("within <strong>0.2%</strong> of the target", article)
+        self.assertIn("within <strong>0.2%</strong> of the 3,000&nbsp;m target", article)
+
+        # Prediction came first, so its paragraph and figures precede the controller's.
+        paragraphs = re.findall(r'<p class="project-description">(.*?)</p>', article, flags=re.DOTALL)
+        self.assertEqual(len(paragraphs), 2)
+        self.assertIn("apogee prediction", paragraphs[0])
+        self.assertIn("airbrake controller", paragraphs[1])
+        self.assertLess(article.index(paragraphs[0]), article.index("apogee-light.gif"))
+        self.assertLess(article.index("trajectory-light.html"), article.index(paragraphs[1]))
+        for text in paragraphs + re.findall(r"<figcaption>(.*?)</figcaption>", article):
+            self.assertNotIn(":", text)
         self.assertNotIn("2.7%", article)
         for detail in ("CFD", "rate-limited"):
             self.assertNotIn(detail, article)
