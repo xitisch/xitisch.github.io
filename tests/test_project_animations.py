@@ -13,6 +13,12 @@ EXPECTED_ANIMATIONS = {
     "images/flapping-wing.gif": (640, 360),
 }
 
+# Loop length in seconds. The flapping clip is trimmed so the wings never rest.
+EXPECTED_DURATIONS = {
+    "images/orca-hand.gif": 11.1,
+    "images/flapping-wing.gif": 7.1,
+}
+
 
 class PictureParser(HTMLParser):
     def __init__(self):
@@ -33,6 +39,31 @@ class PictureParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "picture":
             self.in_picture = False
+
+
+def gif_frame_delays(data):
+    """Walk the GIF block structure and return each frame's delay in centiseconds."""
+
+    def skip_sub_blocks(offset):
+        while data[offset]:
+            offset += data[offset] + 1
+        return offset + 1
+
+    flags = data[10]
+    offset = 13 + (3 * 2 ** ((flags & 7) + 1) if flags & 0x80 else 0)
+    delays = []
+    while data[offset] != 0x3B:
+        if data[offset] == 0x21:
+            if data[offset + 1] == 0xF9:
+                delays.append(struct.unpack("<H", data[offset + 4:offset + 6])[0])
+            offset = skip_sub_blocks(offset + 2)
+        elif data[offset] == 0x2C:
+            local = data[offset + 9]
+            offset += 10 + (3 * 2 ** ((local & 7) + 1) if local & 0x80 else 0)
+            offset = skip_sub_blocks(offset + 1)
+        else:
+            raise AssertionError(f"unexpected GIF block 0x{data[offset]:02x}")
+    return delays
 
 
 def jpeg_size(data):
@@ -66,13 +97,18 @@ class ProjectAnimationTests(unittest.TestCase):
             self.assertEqual(data[:6], b"GIF89a", src)
             self.assertEqual(struct.unpack("<HH", data[6:10]), (width, height), src)
             self.assertIn(b"NETSCAPE2.0\x03\x01\x00\x00", data, f"{src} does not loop forever")
-            self.assertGreater(data.count(b"\x21\xf9\x04"), 50, f"{src} has too few frames")
+            self.assertGreater(len(gif_frame_delays(data)), 50, f"{src} has too few frames")
             self.assertLess(len(data), 10 * 1024 * 1024, src)
 
             img = self.pictures[src]["img"]
             self.assertEqual((img.get("width"), img.get("height")), (str(width), str(height)))
             self.assertGreater(len(img.get("alt", "")), 30)
             self.assertEqual(img.get("loading"), "lazy")
+
+    def test_gifs_have_the_expected_loop_length(self):
+        for src, seconds in EXPECTED_DURATIONS.items():
+            duration = sum(gif_frame_delays((ROOT / src).read_bytes())) / 100
+            self.assertAlmostEqual(duration, seconds, delta=0.15, msg=src)
 
     def test_reduced_motion_gets_a_still_frame_with_the_same_shape(self):
         for src, (width, height) in EXPECTED_ANIMATIONS.items():
