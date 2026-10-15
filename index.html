@@ -147,6 +147,21 @@
           <p class="project-description">
             Developed Physics-Informed Neural Network frameworks in PyTorch for optimal trajectory planning of unicycle robots under kinematic and control constraints. Investigated how loss balancing, physics-based constraint enforcement, and obstacle-avoidance strategies affect PINN-based trajectory optimization.
           </p>
+          <figure class="project-figure project-figure-compact">
+            <img src="images/thesis-three-obstacles.png" alt="Plot of a smooth path from (0, 0) to (1, 0) that dips below the first circular obstacle, rises over the middle one, and dips below the third." width="621" height="317" loading="lazy" decoding="async">
+            <figcaption>A PINN-planned unicycle path weaving between three circular obstacles, with start and goal enforced as hard constraints.</figcaption>
+          </figure>
+          <details class="project-more">
+            <summary>More figures</summary>
+            <figure class="project-figure">
+              <img src="images/thesis-circle-vs-square.png" alt="Two plots side by side: the planned path curves below a circular obstacle on the left and below a square obstacle on the right." width="1600" height="596" loading="lazy" decoding="async">
+              <figcaption>The same start and goal around a circular and a square obstacle.</figcaption>
+            </figure>
+            <figure class="project-figure">
+              <img src="images/thesis-euler-lagrange-y.png" alt="Two plots of the Euler&ndash;Lagrange condition in y over time: the two sides overlap closely for the circle and diverge slightly in the middle for the square." width="1600" height="560" loading="lazy" decoding="async">
+              <figcaption>Optimality check: both sides of the Euler&ndash;Lagrange equation in y along each path (solid vs. dashed). They agree closely for the circle and drift apart around the square&rsquo;s corners.</figcaption>
+            </figure>
+          </details>
         </article>
 
         <article class="project">

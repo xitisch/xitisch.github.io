@@ -448,6 +448,47 @@ section { margin-bottom: 64px; }
   font-weight: 600;
 }
 
+/* Plots are exported on white, so they sit on a white card in both themes. */
+.project-figure { margin: 18px 0 0; }
+
+.project-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.project-figure-compact img { max-width: 639px; }
+
+.project-figure figcaption {
+  max-width: 74ch;
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.project-more { margin-top: 14px; }
+
+.project-more summary {
+  width: fit-content;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.project-more summary:hover { color: var(--accent-hover); }
+
+.project-more summary:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 /* ---------- Skills ---------- */
 
 .skills-grid {
