@@ -61,6 +61,13 @@ class MediaLayoutTests(unittest.TestCase):
         self.assertIn("up to <strong>4.2%</strong>", article)
         self.assertNotIn("10% to 1.3%", article)
 
+        # Airbrake controller result from the nominal RocketPy simulation.
+        self.assertIn("Apogee Prediction &amp; Airbrake Control", article)
+        self.assertIn("EuRoC 2025", article)
+        self.assertIn("from 3,047&nbsp;m down to <strong>2,993&nbsp;m</strong>", article)
+        self.assertIn("a <strong>0.2%</strong> error", article)
+        self.assertNotIn("2.7%", article)
+
     def test_trajectory_embeds_are_lazy_and_load_only_pinned_plotly(self):
         iframes = re.findall(r"<iframe [^>]*></iframe>", self.html)
         self.assertEqual(len(iframes), 2)
