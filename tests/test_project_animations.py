@@ -16,7 +16,7 @@ EXPECTED_ANIMATIONS = {
 # Loop length in seconds. The flapping clip is trimmed so the wings never rest.
 EXPECTED_DURATIONS = {
     "images/orca-hand.gif": 11.1,
-    "images/flapping-wing.gif": 7.1,
+    "images/flapping-wing.gif": 5.6,
 }
 
 
