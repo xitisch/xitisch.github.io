@@ -61,9 +61,9 @@ class ProjectVideoTests(unittest.TestCase):
         self.assertLess(self.html.index("ORCA Robotic Hand"), orca)
         self.assertLess(self.html.index("Biomimetic Flapping-Wing Robot"), flapping)
 
-    def test_orca_entry_names_the_course_and_its_term(self):
+    def test_orca_entry_names_the_course_its_term_and_the_learning_work(self):
         article = re.search(
-            r'<article class="project">(?:(?!</article>).)*?ORCA Robotic Hand.*?</article>',
+            r'<article class="project">(?:(?!</article>).)*?ORCA Robotic Hand</h3>.*?</article>',
             self.html,
             flags=re.DOTALL,
         ).group(0)
@@ -73,8 +73,9 @@ class ProjectVideoTests(unittest.TestCase):
             '<time datetime="2026-12">Dec 2026</time></div>',
             article,
         )
-        self.assertIn("Real-World Robotics Course &middot; ETH Z&uuml;rich", article)
-        self.assertIn("Real-World Robotics course.", article)
+        self.assertIn("Real-World Robotics Project Course &middot; ETH Z&uuml;rich", article)
+        for topic in ("imitation learning", "reinforcement learning", "reward model", "long-horizon task"):
+            self.assertIn(topic, article)
         self.assertNotIn("Real World Robotics", article)
 
     def test_videos_are_small_silent_h264_files_without_camera_metadata(self):
