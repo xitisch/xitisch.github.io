@@ -74,7 +74,8 @@ class ProjectVideoTests(unittest.TestCase):
             article,
         )
         self.assertIn("Real-World Robotics Project Course &middot; ETH Z&uuml;rich", article)
-        for topic in ("imitation learning", "reinforcement learning", "reward model", "long-horizon task"):
+        for topic in ("imitation learning", "reinforcement learning", "reward model",
+                      "long-horizon task", "robotic arm", "locate and grasp"):
             self.assertIn(topic, article)
         self.assertNotIn("Real World Robotics", article)
 
