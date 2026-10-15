@@ -39,7 +39,7 @@ class MediaLayoutTests(unittest.TestCase):
         light = re.findall(r'class="theme-light-only".*?(?:src|srcset)="([^"]+)"', self.html)
         dark = re.findall(r'class="theme-dark-only".*?(?:src|srcset)="([^"]+)"', self.html)
 
-        self.assertEqual(len(light), 2)
+        self.assertEqual(len(light), 3)
         self.assertEqual([path.replace("light", "dark") for path in light], dark)
         css = STYLE_CSS.read_text(encoding="utf-8")
         self.assertIn(
@@ -74,6 +74,9 @@ class MediaLayoutTests(unittest.TestCase):
         self.assertIn("airbrake controller", paragraphs[1])
         self.assertLess(article.index(paragraphs[0]), article.index("apogee-light.gif"))
         self.assertLess(article.index("trajectory-light.html"), article.index(paragraphs[1]))
+        self.assertLess(article.index(paragraphs[1]), article.index("airbrake-light.gif"))
+        # The airbrake GIF ends at the result the paragraph quotes.
+        self.assertIn("peaks at 2,993&nbsp;m instead of 3,047&nbsp;m", article)
         for text in paragraphs + re.findall(r"<figcaption>(.*?)</figcaption>", article):
             self.assertNotIn(":", text)
         self.assertNotIn("2.7%", article)

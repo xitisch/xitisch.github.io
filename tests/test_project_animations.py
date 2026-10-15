@@ -13,6 +13,8 @@ EXPECTED_ANIMATIONS = {
     "images/flapping-wing/bench-test.gif": (640, 360),
     "images/rocket/apogee-light.gif": (1040, 858),
     "images/rocket/apogee-dark.gif": (1040, 858),
+    "images/rocket/airbrake-light.gif": (800, 620),
+    "images/rocket/airbrake-dark.gif": (800, 620),
 }
 
 # Loop length in seconds. The flapping clip is trimmed so the wings never rest.
@@ -21,6 +23,8 @@ EXPECTED_DURATIONS = {
     "images/flapping-wing/bench-test.gif": 5.6,
     "images/rocket/apogee-light.gif": 8.0,
     "images/rocket/apogee-dark.gif": 8.0,
+    "images/rocket/airbrake-light.gif": 15.65,
+    "images/rocket/airbrake-dark.gif": 15.65,
 }
 
 

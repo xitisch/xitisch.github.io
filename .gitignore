@@ -5,3 +5,6 @@ images/personal-image.JPG
 # Original camera files stay out of the repo; web versions live in images/.
 *.MOV
 *.mov
+
+# macOS folder metadata
+.DS_Store
