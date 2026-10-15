@@ -11,8 +11,6 @@ STYLE_CSS = ROOT / "style.css"
 
 THESIS_FIGURES = [
     "images/thesis/three-obstacles.png",
-    "images/thesis/circle-vs-square.png",
-    "images/thesis/euler-lagrange-y.png",
 ]
 
 
@@ -57,15 +55,12 @@ class ProjectFigureTests(unittest.TestCase):
         self.assertIsNotNone(article)
         return article.group(0)
 
-    def test_thesis_shows_one_figure_and_tucks_the_rest_behind_details(self):
+    def test_thesis_shows_a_single_figure_without_extra_figures(self):
         article = self._thesis_article()
-        visible, _, hidden = article.partition('<details class="project-more">')
 
-        self.assertIn(THESIS_FIGURES[0], visible)
-        self.assertIn("<summary>More figures</summary>", hidden)
-        for src in THESIS_FIGURES[1:]:
-            self.assertIn(src, hidden)
-            self.assertNotIn(src, visible)
+        self.assertIn(THESIS_FIGURES[0], article)
+        self.assertNotIn("<details", article)
+        self.assertNotIn("More figures", article)
 
     def test_figure_images_are_web_sized_pngs_matching_their_markup(self):
         self.assertEqual([image["src"] for image in self.images], THESIS_FIGURES)
