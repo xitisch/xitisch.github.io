@@ -147,11 +147,11 @@ class ProjectAnimationTests(unittest.TestCase):
         ).group(0)
 
         self.assertIn(
-            '<div class="project-date"><time datetime="2026-09">Sep</time> &ndash; '
-            '<time datetime="2026-12">Dec 2026</time></div>',
+            '<div class="project-date"><time datetime="2026-09">Sep 2026</time> '
+            '&ndash; Present</div>',
             article,
         )
-        self.assertIn("Real-World Robotics Project Course &middot; ETH Z&uuml;rich", article)
+        self.assertIn("Project Course &middot; ETH Z&uuml;rich", article)
         for topic in ("imitation learning", "reinforcement learning", "reward model",
                       "long-horizon task", "robotic arm", "locate and grasp"):
             self.assertIn(topic, article)
