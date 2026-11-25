@@ -22,7 +22,7 @@ def tracked_media():
 class MediaLayoutTests(unittest.TestCase):
     def setUp(self):
         self.html = INDEX_HTML.read_text(encoding="utf-8")
-        self.referenced = set(re.findall(r'(?:src|srcset|href)="(images/[^"]+)"', self.html))
+        self.referenced = set(re.findall(r'(?:src|srcset|href|poster)="(images/[^"]+)"', self.html))
 
     def test_media_lives_in_one_folder_per_section(self):
         folders = {path.name for path in IMAGES.iterdir() if path.is_dir()}
@@ -31,7 +31,7 @@ class MediaLayoutTests(unittest.TestCase):
         # The site icon is the one file that sits at the top of images/.
         self.assertIn("images/favicon.svg", tracked_media())
         for path in tracked_media() - {"images/favicon.svg"}:
-            self.assertRegex(path, r"^images/[a-z-]+/[a-z0-9-]+\.(png|jpg|gif|html)$")
+            self.assertRegex(path, r"^images/[a-z-]+/[a-z0-9-]+\.(png|jpg|gif|html|mp4)$")
 
     def test_favicon_lives_in_images(self):
         self.assertIn('<link rel="icon" href="images/favicon.svg" type="image/svg+xml">', self.html)

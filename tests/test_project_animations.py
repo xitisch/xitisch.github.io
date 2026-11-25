@@ -134,8 +134,16 @@ class ProjectAnimationTests(unittest.TestCase):
             poster_width, poster_height = image_size(data)
             self.assertAlmostEqual(poster_width / poster_height, width / height, places=2)
 
-    def test_no_video_players_or_scripts_remain(self):
-        self.assertNotIn("<video", self.html)
+    def test_teleoperation_video_uses_native_controls_without_autoplay(self):
+        videos = re.findall(r"<video\b([^>]*)>(.*?)</video>", self.html, flags=re.DOTALL)
+        self.assertEqual(len(videos), 1)
+        attributes, contents = videos[0]
+        self.assertRegex(attributes, r"\bcontrols\b")
+        self.assertRegex(attributes, r"\bplaysinline\b")
+        self.assertNotIn("autoplay", attributes)
+        self.assertIn('preload="none"', attributes)
+        self.assertIn('src="images/orca-hand/teleoperation.mp4" type="video/mp4"', contents)
+        self.assertIn('id="teleoperation"', self.html)
         self.assertNotIn("media.js", self.html)
         self.assertFalse((ROOT / "media.js").exists())
 
