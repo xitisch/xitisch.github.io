@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_HTML = ROOT / "index.html"
 STYLE_CSS = ROOT / "style.css"
-IMAGES = ROOT / "images"
+MEDIA = ROOT / "media"
 
 SECTIONS = {"about", "logos", "orca-hand", "flapping-wing", "thesis", "rocket"}
 
@@ -14,7 +14,7 @@ SECTIONS = {"about", "logos", "orca-hand", "flapping-wing", "thesis", "rocket"}
 def tracked_media():
     return {
         path.relative_to(ROOT).as_posix()
-        for path in IMAGES.rglob("*")
+        for path in MEDIA.rglob("*")
         if path.is_file() and not path.name.startswith(".") and path.suffix != ".JPG"
     }
 
@@ -22,21 +22,26 @@ def tracked_media():
 class MediaLayoutTests(unittest.TestCase):
     def setUp(self):
         self.html = INDEX_HTML.read_text(encoding="utf-8")
-        self.referenced = set(re.findall(r'(?:src|srcset|href|poster)="(images/[^"]+)"', self.html))
+        self.referenced = set(re.findall(r'(?:src|srcset|href|poster)="(media/[^"]+)"', self.html))
 
     def test_media_lives_in_one_folder_per_section(self):
-        folders = {path.name for path in IMAGES.iterdir() if path.is_dir()}
+        folders = {path.name for path in MEDIA.iterdir() if path.is_dir()}
 
         self.assertEqual(folders, SECTIONS)
-        # The site icon is the one file that sits at the top of images/.
-        self.assertIn("images/favicon.svg", tracked_media())
-        for path in tracked_media() - {"images/favicon.svg"}:
-            self.assertRegex(path, r"^images/[a-z-]+/[a-z0-9-]+\.(png|jpg|gif|html|mp4)$")
+        # The site icon is the one file that sits at the top of media/.
+        self.assertIn("media/favicon.svg", tracked_media())
+        for path in tracked_media() - {"media/favicon.svg"}:
+            self.assertRegex(path, r"^media/[a-z-]+/[a-z0-9-]+\.(png|jpg|gif|html|mp4)$")
 
-    def test_favicon_lives_in_images(self):
-        self.assertIn('<link rel="icon" href="images/favicon.svg" type="image/svg+xml">', self.html)
+    def test_site_media_folder_is_named_media(self):
+        self.assertTrue(MEDIA.is_dir())
+        self.assertFalse((ROOT / "images").exists())
+        self.assertNotIn('"images/', self.html)
+
+    def test_favicon_lives_in_media(self):
+        self.assertIn('<link rel="icon" href="media/favicon.svg" type="image/svg+xml">', self.html)
         self.assertFalse((ROOT / "favicon.svg").exists())
-        self.assertTrue((IMAGES / "favicon.svg").read_text(encoding="utf-8").lstrip().startswith("<svg"))
+        self.assertTrue((MEDIA / "favicon.svg").read_text(encoding="utf-8").lstrip().startswith("<svg"))
 
     def test_every_referenced_file_exists_and_every_file_is_used(self):
         self.assertEqual(self.referenced, tracked_media())
@@ -102,7 +107,7 @@ class MediaLayoutTests(unittest.TestCase):
 
         for name in ("trajectory", "airbrake-trajectory"):
             for theme in ("light", "dark"):
-                page = (IMAGES / "rocket" / f"{name}-{theme}.html").read_text(encoding="utf-8")
+                page = (MEDIA / "rocket" / f"{name}-{theme}.html").read_text(encoding="utf-8")
                 scripts = re.findall(r'<script[^>]*src="([^"]+)"[^>]*>', page)
                 self.assertEqual(scripts, ["https://cdn.plot.ly/plotly-4.1.1.min.js"])
                 self.assertIn('integrity="sha256-', page)
@@ -115,18 +120,18 @@ class MediaLayoutTests(unittest.TestCase):
         self.assertIn("using flight data from an earlier AESIR rocket", prediction)
         self.assertNotIn("Freya", prediction)
         for theme in ("light", "dark"):
-            chart = (IMAGES / "rocket" / f"trajectory-{theme}.html").read_text(encoding="utf-8")
+            chart = (MEDIA / "rocket" / f"trajectory-{theme}.html").read_text(encoding="utf-8")
             self.assertIn('"text":"Flight path to apogee (earlier rocket)"', chart)
             self.assertNotIn("Freya", chart)
 
     def test_rocket_story_alternates_text_gif_and_3d_chart(self):
         order = [
             "I started with apogee prediction",
-            "images/rocket/apogee-light.gif",
-            "images/rocket/trajectory-light.html",
+            "media/rocket/apogee-light.gif",
+            "media/rocket/trajectory-light.html",
             "PID-based airbrake controller",
-            "images/rocket/airbrake-light.gif",
-            "images/rocket/airbrake-trajectory-light.html",
+            "media/rocket/airbrake-light.gif",
+            "media/rocket/airbrake-trajectory-light.html",
         ]
         positions = [self.html.index(marker) for marker in order]
         self.assertEqual(positions, sorted(positions))

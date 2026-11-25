@@ -9,22 +9,22 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_HTML = ROOT / "index.html"
 
 EXPECTED_ANIMATIONS = {
-    "images/orca-hand/calibration.gif": (320, 400),
-    "images/flapping-wing/bench-test.gif": (640, 360),
-    "images/rocket/apogee-light.gif": (1040, 858),
-    "images/rocket/apogee-dark.gif": (1040, 858),
-    "images/rocket/airbrake-light.gif": (800, 620),
-    "images/rocket/airbrake-dark.gif": (800, 620),
+    "media/orca-hand/calibration.gif": (320, 400),
+    "media/flapping-wing/bench-test.gif": (640, 360),
+    "media/rocket/apogee-light.gif": (1040, 858),
+    "media/rocket/apogee-dark.gif": (1040, 858),
+    "media/rocket/airbrake-light.gif": (800, 620),
+    "media/rocket/airbrake-dark.gif": (800, 620),
 }
 
 # Loop length in seconds. The flapping clip is trimmed so the wings never rest.
 EXPECTED_DURATIONS = {
-    "images/orca-hand/calibration.gif": 11.1,
-    "images/flapping-wing/bench-test.gif": 5.6,
-    "images/rocket/apogee-light.gif": 8.0,
-    "images/rocket/apogee-dark.gif": 8.0,
-    "images/rocket/airbrake-light.gif": 15.65,
-    "images/rocket/airbrake-dark.gif": 15.65,
+    "media/orca-hand/calibration.gif": 11.1,
+    "media/flapping-wing/bench-test.gif": 5.6,
+    "media/rocket/apogee-light.gif": 8.0,
+    "media/rocket/apogee-dark.gif": 8.0,
+    "media/rocket/airbrake-light.gif": 15.65,
+    "media/rocket/airbrake-dark.gif": 15.65,
 }
 
 
@@ -131,11 +131,11 @@ class ProjectAnimationTests(unittest.TestCase):
 
     def test_animations_sit_in_their_projects(self):
         self.assertEqual(set(self.pictures), set(EXPECTED_ANIMATIONS))
-        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("images/orca-hand/calibration.gif"))
+        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("media/orca-hand/calibration.gif"))
         self.assertLess(
-            self.html.index("Biomimetic Flapping-Wing Robot"), self.html.index("images/flapping-wing/bench-test.gif")
+            self.html.index("Biomimetic Flapping-Wing Robot"), self.html.index("media/flapping-wing/bench-test.gif")
         )
-        self.assertLess(self.html.index("Rocket Avionics"), self.html.index("images/rocket/apogee-light.gif"))
+        self.assertLess(self.html.index("Rocket Avionics"), self.html.index("media/rocket/apogee-light.gif"))
 
     def test_gifs_loop_forever_and_match_their_markup(self):
         for src, (width, height) in EXPECTED_ANIMATIONS.items():
@@ -175,13 +175,13 @@ class ProjectAnimationTests(unittest.TestCase):
         self.assertRegex(attributes, r"\bplaysinline\b")
         self.assertNotIn("autoplay", attributes)
         self.assertIn('preload="none"', attributes)
-        self.assertIn('src="images/orca-hand/teleoperation.mp4" type="video/mp4"', contents)
+        self.assertIn('src="media/orca-hand/teleoperation.mp4" type="video/mp4"', contents)
         self.assertIn('id="teleoperation"', self.html)
         self.assertNotIn("media.js", self.html)
         self.assertFalse((ROOT / "media.js").exists())
 
     def test_teleoperation_video_is_a_full_resolution_53_second_cut(self):
-        video = ROOT / "images" / "orca-hand" / "teleoperation.mp4"
+        video = ROOT / "media" / "orca-hand" / "teleoperation.mp4"
         duration, (width, height) = mp4_duration_and_size(video.read_bytes())
 
         # Trimmed to end as the hand sets the cube down, rather than downscaled.

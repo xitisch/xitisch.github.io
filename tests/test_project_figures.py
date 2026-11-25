@@ -10,7 +10,7 @@ INDEX_HTML = ROOT / "index.html"
 STYLE_CSS = ROOT / "style.css"
 
 THESIS_FIGURES = [
-    "images/thesis/three-obstacles.png",
+    "media/thesis/three-obstacles.png",
 ]
 
 
