@@ -24,7 +24,7 @@ class HeaderContentTests(unittest.TestCase):
         link = re.search(r'<a class="primary-link" href="([^"]+)"', html)
 
         self.assertIsNotNone(link)
-        self.assertEqual(link.group(1), "CV_Xiangtian_Shi.pdf")
+        self.assertEqual(link.group(1), "CV_XiangtianShi.pdf")
         pdf = INDEX_HTML.parent / link.group(1)
         self.assertTrue(pdf.is_file())
         self.assertEqual(pdf.read_bytes()[:5], b"%PDF-")
@@ -55,12 +55,13 @@ class HeaderContentTests(unittest.TestCase):
         self.assertIsNotNone(about)
         return about.group(1)
 
-    def test_research_interests_stand_in_their_own_paragraph(self):
+    def test_intro_paragraph_states_the_degree_and_research_interests(self):
         about = self._about_section()
 
         self.assertRegex(
             about,
-            r"<p>\s*I'm interested in physics-based modeling and simulation,"
+            r"<p>\s*Hey there! I'm an M\.Sc\. student in Robotics, Systems and Control"
+            r" at ETH Zürich\. I'm interested in physics-based modeling and simulation,"
             r".*?sim-to-real robotics\.\s*</p>",
         )
 
