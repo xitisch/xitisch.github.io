@@ -89,6 +89,39 @@ def image_size(data):
     raise AssertionError("no JPEG frame header")
 
 
+def mp4_boxes(data, start, end):
+    offset = start
+    while offset + 8 <= end:
+        size, kind = struct.unpack(">I4s", data[offset:offset + 8])
+        header = 8
+        if size == 1:
+            size, header = struct.unpack(">Q", data[offset + 8:offset + 16])[0], 16
+        elif size == 0:
+            size = end - offset
+        yield kind.decode("latin-1"), offset + header, offset + size
+        offset += size
+
+
+def mp4_duration_and_size(data):
+    """Movie duration in seconds and the video track's display size."""
+    moov = next((s, e) for kind, s, e in mp4_boxes(data, 0, len(data)) if kind == "moov")
+    duration, size = None, None
+    for kind, start, end in mp4_boxes(data, *moov):
+        if kind == "mvhd":
+            if data[start] == 1:
+                timescale, length = struct.unpack(">IQ", data[start + 20:start + 32])
+            else:
+                timescale, length = struct.unpack(">II", data[start + 12:start + 20])
+            duration = length / timescale
+        elif kind == "trak":
+            for inner, s, e in mp4_boxes(data, start, end):
+                if inner == "tkhd":
+                    width, height = struct.unpack(">II", data[e - 8:e])
+                    if width:
+                        size = (width >> 16, height >> 16)
+    return duration, size
+
+
 class ProjectAnimationTests(unittest.TestCase):
     def setUp(self):
         self.html = INDEX_HTML.read_text(encoding="utf-8")
@@ -146,6 +179,23 @@ class ProjectAnimationTests(unittest.TestCase):
         self.assertIn('id="teleoperation"', self.html)
         self.assertNotIn("media.js", self.html)
         self.assertFalse((ROOT / "media.js").exists())
+
+    def test_teleoperation_video_is_a_full_resolution_53_second_cut(self):
+        video = ROOT / "images" / "orca-hand" / "teleoperation.mp4"
+        duration, (width, height) = mp4_duration_and_size(video.read_bytes())
+
+        # Trimmed to end as the hand sets the cube down, rather than downscaled.
+        self.assertAlmostEqual(duration, 53.0, delta=0.5)
+        self.assertEqual((width, height), (1080, 1920))
+        # Stays under GitHub's 50 MB large-file warning.
+        self.assertLess(video.stat().st_size, 50 * 1024 * 1024)
+
+        attributes = re.search(r"<video\b([^>]*)>", self.html).group(1)
+        self.assertIn('width="1080" height="1920"', attributes)
+        poster = ROOT / re.search(r'poster="([^"]+)"', attributes).group(1)
+        poster_width, poster_height = image_size(poster.read_bytes())
+        self.assertAlmostEqual(poster_width / poster_height, width / height, places=2)
+        self.assertGreaterEqual(poster_width, 540)
 
     def test_orca_entry_names_the_course_its_term_and_the_learning_work(self):
         article = re.search(
