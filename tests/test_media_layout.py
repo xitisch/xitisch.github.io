@@ -8,7 +8,7 @@ INDEX_HTML = ROOT / "index.html"
 STYLE_CSS = ROOT / "style.css"
 MEDIA = ROOT / "media"
 
-SECTIONS = {"about", "logos", "orca-hand", "flapping-wing", "thesis", "rocket"}
+SECTIONS = {"about", "logos", "rwr", "flapping-wing", "thesis", "rocket"}
 
 
 def tracked_media():

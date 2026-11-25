@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_HTML = ROOT / "index.html"
 
 EXPECTED_ANIMATIONS = {
-    "media/orca-hand/calibration.gif": (320, 400),
+    "media/rwr/calibration.gif": (320, 400),
     "media/flapping-wing/bench-test.gif": (640, 360),
     "media/rocket/apogee-light.gif": (1040, 858),
     "media/rocket/apogee-dark.gif": (1040, 858),
@@ -19,7 +19,7 @@ EXPECTED_ANIMATIONS = {
 
 # Loop length in seconds. The flapping clip is trimmed so the wings never rest.
 EXPECTED_DURATIONS = {
-    "media/orca-hand/calibration.gif": 11.1,
+    "media/rwr/calibration.gif": 11.1,
     "media/flapping-wing/bench-test.gif": 5.6,
     "media/rocket/apogee-light.gif": 8.0,
     "media/rocket/apogee-dark.gif": 8.0,
@@ -131,7 +131,7 @@ class ProjectAnimationTests(unittest.TestCase):
 
     def test_animations_sit_in_their_projects(self):
         self.assertEqual(set(self.pictures), set(EXPECTED_ANIMATIONS))
-        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("media/orca-hand/calibration.gif"))
+        self.assertLess(self.html.index("ORCA Robotic Hand</h3>"), self.html.index("media/rwr/calibration.gif"))
         self.assertLess(
             self.html.index("Biomimetic Flapping-Wing Robot"), self.html.index("media/flapping-wing/bench-test.gif")
         )
@@ -175,13 +175,13 @@ class ProjectAnimationTests(unittest.TestCase):
         self.assertRegex(attributes, r"\bplaysinline\b")
         self.assertNotIn("autoplay", attributes)
         self.assertIn('preload="none"', attributes)
-        self.assertIn('src="media/orca-hand/teleoperation.mp4" type="video/mp4"', contents)
+        self.assertIn('src="media/rwr/teleoperation.mp4" type="video/mp4"', contents)
         self.assertIn('id="teleoperation"', self.html)
         self.assertNotIn("media.js", self.html)
         self.assertFalse((ROOT / "media.js").exists())
 
     def test_teleoperation_video_is_a_full_resolution_53_second_cut(self):
-        video = ROOT / "media" / "orca-hand" / "teleoperation.mp4"
+        video = ROOT / "media" / "rwr" / "teleoperation.mp4"
         duration, (width, height) = mp4_duration_and_size(video.read_bytes())
 
         # Trimmed to end as the hand sets the cube down, rather than downscaled.
