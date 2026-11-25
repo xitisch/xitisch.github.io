@@ -102,6 +102,19 @@ def mp4_boxes(data, start, end):
         offset += size
 
 
+def mp4_track_kinds(data):
+    """Handler type of every track, e.g. "vide" or "soun"."""
+    moov = next((s, e) for kind, s, e in mp4_boxes(data, 0, len(data)) if kind == "moov")
+    kinds = []
+    for kind, start, end in mp4_boxes(data, *moov):
+        if kind != "trak":
+            continue
+        mdia = next((s, e) for k, s, e in mp4_boxes(data, start, end) if k == "mdia")
+        hdlr = next(s for k, s, e in mp4_boxes(data, *mdia) if k == "hdlr")
+        kinds.append(data[hdlr + 8:hdlr + 12].decode("latin-1"))
+    return kinds
+
+
 def mp4_duration_and_size(data):
     """Movie duration in seconds and the video track's display size."""
     moov = next((s, e) for kind, s, e in mp4_boxes(data, 0, len(data)) if kind == "moov")
@@ -196,6 +209,12 @@ class ProjectAnimationTests(unittest.TestCase):
         poster_width, poster_height = image_size(poster.read_bytes())
         self.assertAlmostEqual(poster_width / poster_height, width / height, places=2)
         self.assertGreaterEqual(poster_width, 540)
+
+    def test_teleoperation_video_is_silent(self):
+        data = (ROOT / "media" / "rwr" / "teleoperation.mp4").read_bytes()
+
+        # The audio track is removed from the file, so the direct link is silent too.
+        self.assertEqual(mp4_track_kinds(data), ["vide"])
 
     def test_orca_entry_names_the_course_its_term_and_the_learning_work(self):
         article = re.search(
