@@ -193,6 +193,28 @@ class ProjectAnimationTests(unittest.TestCase):
         self.assertNotIn("media.js", self.html)
         self.assertFalse((ROOT / "media.js").exists())
 
+    def test_teleoperation_video_stays_hidden_until_its_toggle_is_opened(self):
+        article = re.search(
+            r'<article class="project">(?:(?!</article>).)*?ORCA Robotic Hand</h3>.*?</article>',
+            self.html,
+            flags=re.DOTALL,
+        ).group(0)
+        details = re.findall(r"<details\b([^>]*)>(.*?)</details>", article, flags=re.DOTALL)
+
+        # A closed <details> shows only its summary arrow until it is clicked.
+        self.assertEqual(len(details), 1)
+        attributes, contents = details[0]
+        self.assertIn('class="project-more"', attributes)
+        self.assertNotRegex(attributes, r"\bopen\b")
+        # The anchor sits on the toggle, so #teleoperation lands on the arrow.
+        self.assertIn('id="teleoperation"', attributes)
+        self.assertEqual(self.html.count('id="teleoperation"'), 1)
+        self.assertRegex(contents, r"^\s*<summary>Teleoperation video</summary>")
+        # The page's only video lives inside the toggle, together with its caption.
+        self.assertEqual(self.html.count("<video"), 1)
+        self.assertIn("<video", contents)
+        self.assertIn("<figcaption>Teleoperating the Franka arm and ORCA hand.</figcaption>", contents)
+
     def test_teleoperation_video_is_a_full_resolution_53_second_cut(self):
         video = ROOT / "media" / "rwr" / "teleoperation.mp4"
         duration, (width, height) = mp4_duration_and_size(video.read_bytes())
